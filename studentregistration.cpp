@@ -2,206 +2,140 @@
 
 using namespace std;
 
-struct person
+struct Student
 {
-  std::string username;
-  std::string password;
-  char side;
-  int personCode;
+    char name[20];
+    char family[20];
+    int brithday;
+    bool gender;
+    char city[20];
+    char phonnumber[15];
 };
 
-enum side
+void read(Student s[10] , int count)
 {
-  RegularUser = 'r',  //This category includes public users who have access to the site but limited features are available to them.
-  Member      = 'm',  //These users are registered on the site and have more access than regular users.
-  Contributor = 'c',  //These users can create content but usually require approval from administrators.
-  Editor      = 'e',  //These users are responsible for reviewing and editing content submitted by authors.
-  Admin       = 'a',  //These users have full access to the site and can manage all sections.
-  Developer   = 'd',  //These users are responsible for the technical development and maintenance of the site.
-  Security    = 's'   //These users are responsible for site security and have special access to manage security.
+  for(int i = 0; i < count; i++)
+  {
+    cout << "Name: " << s[i].name << "\t";
+    cout << "Family: " << s[i].family << "\t";
+    if(s[i].gender)
+      cout << "Gender: mail" << "\t";
+    else
+      cout << "Gender: Femail" << "\t";
+    cout << "Brithday: " << s[i].brithday << "\t";
+    cout << "City: " << s[i].city << "\t";
+    cout << "Phonnumber: " << s[i].phonnumber << endl;
+  }
+};
+int write(Student s[10] ,int count = 0)
+{
+  char n;
+  while(count < 10)
+  {
+    cout << "Enter name:";
+    cin >> s[count].name;
+
+    cout << "Enter family:";
+    cin >> s[count].family;
+
+    cout << "Enter brithday:";
+    cin >> s[count].brithday;
+
+    cout << "Enter gender"
+            "(mail 1 and femail 0):";
+    cin >> s[count].gender;
+
+    cout << "Enter city:";
+    cin >> s[count].city;
+
+    cout << "Enter phonnumber:";
+    cin >> s[count].phonnumber;
+
+    count++;
+
+    cout << "Enter 'e' to exit: \n"
+            "Enter eny keyword to continue:" << endl;
+    cin >> n;
+    if(n == 'e')
+      break;
+  }
+  return count;
 };
 
-// Function to display a visual welcome
-void displayWelcomeMessage() {
-  std::cout << "******************************************\n";
-  std::cout << "*                                        *\n";
-  std::cout << "*   your welcome to login person system  *\n";
-  std::cout << "*                                        *\n";
-  std::cout << "*          Project: Login System         *\n";
-  std::cout << "*        Author: [Amir Aghabakloo]       *\n";
-  std::cout << "*                                        *\n";
-  std::cout << "******************************************\n";
-  std::cout << "\n";
-}
-
-// Function to display instructions
-void displayInstructions() {
-  std::cout << "Beginner's Guide to Writing a Login System:\n";
-  std::cout << "1. Create a data structure to store user information.\n";
-  std::cout << "2. Request the user's username and password.\n";
-  std::cout << "3. Compare the entered information with the stored data.\n";
-  std::cout << "4. If the information matches, log the user into the system.\n";
-  std::cout << "5. Otherwise, display an error message.\n";
-  std::cout << "\n";
-}
-
-// Function to display person information
-void display(person **p, int length)
+void search(Student s[10] )
 {
-  for(int i=0; i<length; i++)
-    cout << "UserName: " << p[i]->username << "\tPassWord: " << p[i]->password << "\tSide: "
-      << p[i]->side << "\t PersonCode: " << p[i]->personCode << endl;
-}
+  std::cout << "Search" << std::endl;
+};
 
-void regularUser(person **p, int id)
+void deleted(Student s[10] )
 {
-  cout << ".....regularUser yourwelcom....." << endl;
+  std::cout << "Delete" << std::endl;
+};
 
-  char chois;
-  char order;
-  char comments[50];
+void modify(Student s[10] )
+{
+  std::cout << "Modify" << std::endl;
+};
 
-  cout << "Enter 'c' to comment,\n"
-          "Select order 'o',\n"
-          "Buy cart 'b',\n"
-          "Interest 'l' or 'd',\n"
-          "Exit 'e'." << endl;
+enum Operat
+{
+  Read = 0,
+  Write = 1,
+  Search = 2,
+  Delete ,
+  Modify
+};
+
+int main()
+{
+  cout << "A program for storing student"
+          " information." << endl;
+
+  Student s[10];
+  int Operat,
+      countiner = 0;
 
   while(true)
   {
-    cin >> chois;
-    if(chois == 'e')
-      break;
-    switch(chois)
+    cout << "Enter 0 to view information,\n"
+        "1 to enter information,\n"
+        "2 to search in information,\n"
+        "3 to delete information,\n"
+        "4 to change information, and\n"
+        "5 to exit from program." << endl;
+    cin >> Operat;
+
+    if(Operat == 5)
+        break;
+
+    else if(Operat > 5 || Operat < 0)
     {
-      case 'c':
-        cout << "enter your comment:";
-        cin >> comments;
-        cout << "User " << p[id]->username << " comment is: " << comments << endl;
-        break;
-
-      case 'o':
-        cout << "from a to z enter a order: ";
-        cin >> order;
-        break;
-
-      case 'b':
-        int cart;
-        cout << "your order is " << order << endl;
-        cout << "enter info crdit cart.";
-        cin >> cart;
-        cout << "Your order for " << order <<" will arrive in a short while." << endl;
-        break;
-
-      case 'l':
-        cout << "User " << p[id]->username << " liked the product." << endl;
-        break;
-
-      case 'd':
-        cout << "User " << p[id]->username << " disliked the product." << endl;
-        break;
+      cout << "You entered the input "
+                "incorrectly." << endl;
+      continue;
     }
-    cout << "enter comment: ";
+    switch (Operat)
+    {
+      case Read:
+        read(s, countiner);
+      break;
+
+      case Write:
+        countiner = write(s);
+      break;
+
+      case Search:
+        search(s);
+      break;
+
+      case Delete:
+        deleted(s);
+      break;
+
+      case Modify:
+        modify(s);
+      break;
+    }
   }
-}
-
-void member()
-{
-  cout << "member";
-}
-void editor()
-{
-  cout << "editor";
-}
-void admin()
-{
-  cout << "admin";
-}
-void developer()
-{
-  cout << "developer";
-}
-void security()
-{
-  cout << "security";
-}
-void contributor()
-{
-  cout << "contributor";
-}
-
-int main() {
-
-  displayWelcomeMessage();
-
-  displayInstructions();
-
-  int length = 7;
-  const int width = 4;
-
-  person **p = new person*[length];
-
-  p[0] = new person({"leilamahmudi" ,"@leila:0990"  ,RegularUser  ,1379});
-  p[1] = new person({"aminagha"     ,"@Amin:0936"  ,Member       ,1386});
-  p[2] = new person({"mahdismusavi" ,"@Mahdis:0903"  ,Contributor  ,1386});
-  p[3] = new person({"fatimosavi"   ,"@Fati:0936"  ,Editor       ,1390});
-  p[4] = new person({"amirbagloo"   ,"@Almnv:991"   ,Admin        ,1369});
-  p[5] = new person({"sadrabakal"   ,"@Sadra:0477"  ,Developer    ,1400});
-  p[6] = new person({"alirambakal"  ,"@AliRam:0369"  ,Security     ,1404});
-
-  string username;
-  string password;
-  char side;
-  int personCode;
-
-  cout << "Enter username: ";
-  cin >> username;
-
-  cout << "Enter password: ";
-  cin >> password;
-
-  for(int i=0; i<7; i++)
-    if(username == p[i]->username)
-      if(password == p[i]->password)
-      {
-        side = p[i]->side;
-        switch (side) {
-          case RegularUser:
-            regularUser(p, i);
-            break;
-
-          case Member:
-            member();
-            break;
-
-          case Editor:
-            editor();
-            break;
-
-          case Admin:
-            admin();
-            break;
-
-          case Developer:
-            developer();
-            break;
-
-          case Contributor:
-            contributor();
-            break;
-
-          case Security:
-            security();
-            break;
-        }
-      }
-
-  for(int i=0; i<length; i++)
-      delete p[i];
-  delete[] p;
-
-  cout << "Press a key to exit the program....\n";
-  cin.get();
-
   return 0;
 }
