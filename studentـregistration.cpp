@@ -3,17 +3,16 @@ using namespace std;
 
 struct Chart
 {
-   int physic;
-   int chemistre;
-   int mathematic;
-   int avg()
+   float physic;
+   float chemistre;
+   float mathematic;
+   float avg()
    {
-        return (physic + chemistre + mathematic)/3;
+        return (this->physic + this->chemistre + this->mathematic)/3;
    }
    bool failing()
    {
-        if(avg() < 10)
-            return 
+       return !(avg() > 10);
    }
 };
 
@@ -25,6 +24,7 @@ struct Student
     int gender;
     string city;
     string phonnumber;
+    Chart term;
 };
 
 enum Operat
@@ -53,8 +53,13 @@ void print(Student s[10], int i)
         cout << " mail \t";
     else
         cout << " fem  ";
-    cout << s[i].brithday << "\t\t" << s[i].city << "\t\t" << s[i].phonnumber << endl;
-
+    cout << s[i].brithday << "\t\t" << s[i].city << "\t\t" << s[i].phonnumber << "\t\t"
+         << s[i].term.mathematic << "\t" << s[i].term.chemistre << "\t"
+         << s[i].term.physic << "\t" << s[i].term.avg() << "\t";
+    if(s[i].term.failing())
+        cout << "Student has failed!\t" << endl;
+    else
+        cout << "Student has passid!\t" << endl;
 }
 
 void inputInfo(Student s[10], int count)
@@ -77,11 +82,20 @@ void inputInfo(Student s[10], int count)
 
     cout << "Enter phonnumber:";
     cin >> s[count].phonnumber;
+
+    cout << "Enter the math grade:";
+    cin >> s[count].term.mathematic;
+
+    cout << "Enter the physic grade:";
+    cin >> s[count].term.physic;
+
+    cout << "Enter the chemistre grade:";
+    cin >> s[count].term.chemistre;
 }
 
 void read(Student s[10] , int count)
 {
-    cout << "ID| Name | Family |  Gender  |  Brith  |   City   |  PhonNumber" << endl;
+    cout << "ID| Name | Family |  Gender  |  Brith  |   City   |  PhonNumber  |  {math , physic , chem , avg() , failing()}" << endl;
     if(count > 10)
         print(s, count - 11);
     else
@@ -195,6 +209,9 @@ int deleted(Student s[10] ,int count)
         s[i].gender     = s[i+1].gender;
         s[i].city       = s[i+1].city;
         s[i].phonnumber = s[i+1].phonnumber;
+        s[i].term.physic = s[i+1].term.physic;
+        s[i].term.chemistre = s[i+1].term.chemistre;
+        s[i].term.mathematic = s[i+1].term.mathematic;
     }
     count--;
 
@@ -215,10 +232,10 @@ void modify(Student s[10] )
 
 int main(){
     cout << "A program for storing student information." << endl;
-    Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936"},
-                     {"amin","agha",1386,1,"zoor","+98937"},
-                     {"lela","mahmud",1379,0,"hasan","+98990"},
-                     {"mads","mosavi",1386,0,"karaj","+98903"},
+    Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}},
+                     {"amin","agha",1386,1,"zoor","+98937",{9,10,10}},
+                     {"lela","mahmud",1379,0,"hasan","+98990",{20,18,19}},
+                     {"mads","mosavi",1386,0,"karaj","+98903",{18,16,17}},
                     };
     int Operat,
         countiner = 4;
