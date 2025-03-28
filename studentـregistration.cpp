@@ -27,6 +27,17 @@ struct Student
     Chart term;
 };
 
+struct ClassFunctions
+{
+  void inputInfo(Student s[10], int count);
+  void print(Student s[10], int i);
+  void read(Student s[10] , int count);
+  int write(Student s[10] ,int count);
+  void search(Student s[10] , int count);
+  int deleted(Student s[10] ,int count);
+  void modify(Student s[10] );
+};
+
 enum Operat
 {
     Read = 0,
@@ -46,24 +57,60 @@ enum Spec
     Phonnum
 };
 
-void print(Student s[10], int i)
-{
-    cout << i << "   " << s[i].name << " " << s[i].family << "\t\t";
-    if(s[i].gender)
-        cout << " mail \t";
-    else
-        cout << " fem  ";
-    cout << s[i].brithday << "\t\t" << s[i].city << "\t\t" << s[i].phonnumber << "\t\t"
-         << s[i].term.mathematic << "\t" << s[i].term.chemistre << "\t"
-         << s[i].term.physic << "\t" << s[i].term.avg() << "\t";
-    if(s[i].term.failing())
-        cout << "Student has failed!\t" << endl;
-    else
-        cout << "Student has passid!\t" << endl;
+int main(){
+    cout << "A program for storing student information." << endl;
+    
+    ClassFunctions cf;
+    Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}},
+                     {"amin","agha",1386,1,"zoor","+98937",{9,10,10}},
+                     {"lela","mahmud",1379,0,"hasan","+98990",{20,18,19}},
+                     {"mads","mosavi",1386,0,"karaj","+98903",{18,16,17}},
+                    };
+    int Operat,
+        countiner = 4;
+    while(true)
+    {
+        cout << "Enter 0 to view information,\n"
+                "1 to enter information,\n"
+                "2 to search in information,\n"
+                "3 to delete information,\n"
+                "4 to change information,\n"
+                "5 to exit from program." << endl;
+        cin >> Operat;
+        if(Operat == 5)
+            break;
+        else if(Operat > 5 || Operat < 0)
+        {
+            cout << "You entered the input incorrectly." << endl;
+            continue;
+        }
+        switch (Operat)
+        {
+        case Read:
+            cf.read(s, countiner);
+            break;
+  
+        case Write:
+            countiner = cf.write(s, countiner);
+            break;
+  
+        case Search:
+            cf.search(s, countiner);
+            break;
+  
+        case Delete:
+            countiner = cf.deleted(s, countiner);
+            break;
+  
+        case Modify:
+            cf.modify(s);
+            break;
+        }
+    }
+    return 0;
 }
 
-void inputInfo(Student s[10], int count)
-
+void ClassFunctions::inputInfo(Student s[10], int count)
 {
     cout << "Enter name: ";
     cin >> s[count].name;
@@ -93,25 +140,42 @@ void inputInfo(Student s[10], int count)
     cin >> s[count].term.chemistre;
 }
 
-void read(Student s[10] , int count)
+void ClassFunctions::print(Student s[10], int i)
 {
-    cout << "ID| Name | Family |  Gender  |  Brith  |   City   |  PhonNumber  |  {math , physic , chem , avg() , failing()}" << endl;
-    if(count > 10)
-        print(s, count - 11);
-    else
-        for(int i = 0; i < count; i++)
-            print(s, i);
+  cout << i << "   " << s[i].name << " " << s[i].family << "\t\t";
+  if(s[i].gender)
+      cout << " mail \t";
+  else
+      cout << " fem  ";
+  cout << s[i].brithday << "\t\t" << s[i].city << "\t\t" << s[i].phonnumber << "\t\t"
+       << s[i].term.mathematic << "\t" << s[i].term.chemistre << "\t"
+       << s[i].term.physic << "\t" << s[i].term.avg() << "\t";
+  if(s[i].term.failing())
+      cout << "Student has failed!\t" << endl;
+  else
+      cout << "Student has passid!\t" << endl;
+}
+
+void ClassFunctions::read(Student s[10] , int count)
+{
+  ClassFunctions cf;
+  cout << "ID| Name | Family |  Gender  |  Brith  |   City   |  PhonNumber  |  {math , physic , chem , avg() , failing()}" << endl;
+  if(count > 10)
+    cf.print(s, count - 11);
+  else
+    for(int i = 0; i < count; i++)
+      cf.print(s, i);
 };
 
-int write(Student s[10] ,int count)
+int ClassFunctions::write(Student s[10] ,int count)
 {
-    inputInfo(s, count);
+    this->inputInfo(s, count);
     count++;
 
     return count;
 };
 
-void search(Student s[10] , int count)
+void ClassFunctions::search(Student s[10] , int count)
 {
     int Spec;
 
@@ -193,7 +257,7 @@ void search(Student s[10] , int count)
     }
 }
 
-int deleted(Student s[10] ,int count)
+int ClassFunctions::deleted(Student s[10] ,int count)
 {
     std::cout << "Student information deletion section" << std::endl;
 
@@ -218,62 +282,13 @@ int deleted(Student s[10] ,int count)
     return count;
 };
 
-void modify(Student s[10] )
+void ClassFunctions::modify(Student s[10])
 {
     std::cout << "In this section of the program, you can change student details." << std::endl;
-
 
     int id_num;
     cout << "Give the user ID number from modify:";
     cin >> id_num;
 
-    inputInfo(s, id_num);
+    this->inputInfo(s, id_num);
 };
-
-int main(){
-    cout << "A program for storing student information." << endl;
-    Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}},
-                     {"amin","agha",1386,1,"zoor","+98937",{9,10,10}},
-                     {"lela","mahmud",1379,0,"hasan","+98990",{20,18,19}},
-                     {"mads","mosavi",1386,0,"karaj","+98903",{18,16,17}},
-                    };
-    int Operat,
-        countiner = 4;
-    while(true)
-    {
-        cout << "Enter 0 to view information,\n"
-                "1 to enter information,\n"
-                "2 to search in information,\n"
-                "3 to delete information,\n"
-                "4 to change information,\n"
-                "5 to exit from program." << endl;
-        cin >> Operat;
-        if(Operat == 5)
-            break;
-        else if(Operat > 5 || Operat < 0)
-        {
-            cout << "You entered the input incorrectly." << endl;
-            continue;
-        }
-        switch (Operat)
-        {
-        case Read:
-            read(s, countiner);
-            break;
-        case Write:
-            countiner = write(s, countiner);
-            break;
-        case Search:
-            search(s, countiner);
-            break;
-        case Delete:
-            countiner = deleted(s, countiner);
-            break;
-        case Modify:
-            modify(s);
-
-            break;
-        }
-    }
-    return 0;
-}
