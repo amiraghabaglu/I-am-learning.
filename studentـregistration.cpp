@@ -36,6 +36,7 @@ struct ClassFunctions
   void search(Student s[10] , int count);
   int deleted(Student s[10] ,int count);
   void modify(Student s[10] );
+  bool compair(Student s1[10], Student s2[10]);
 };
 
 enum Operat
@@ -60,12 +61,21 @@ enum Spec
 int main(){
     cout << "A program for storing student information." << endl;
     
-    ClassFunctions cf;
-    Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}},
-                     {"amin","agha",1386,1,"zoor","+98937",{9,10,10}},
-                     {"lela","mahmud",1379,0,"hasan","+98990",{20,18,19}},
-                     {"mads","mosavi",1386,0,"karaj","+98903",{18,16,17}},
-                    };
+  ClassFunctions cf;
+  Student s[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}},
+                   {"amin","agha",1386,1,"zoor","+98937",{9,10,10}},
+                   {"lela","mahmud",1379,0,"hasan","+98990",{20,18,19}},
+                   {"mads","mosavi",1386,0,"karaj","+98903",{18,16,17}},
+                  };
+  
+  Student s2[10] = {{"amir","bagloo",1369,1,"zoor","+98936",{10,16,14}}
+                };
+  
+  if(cf.compair(s, s2))
+    cout << "s1 == s2" << endl;
+  else
+    cout << "s1 != s2" << endl;
+  
     int Operat,
         countiner = 4;
     while(true)
@@ -280,7 +290,7 @@ int ClassFunctions::deleted(Student s[10] ,int count)
     count--;
 
     return count;
-};
+}
 
 void ClassFunctions::modify(Student s[10])
 {
@@ -291,4 +301,17 @@ void ClassFunctions::modify(Student s[10])
     cin >> id_num;
 
     this->inputInfo(s, id_num);
-};
+}
+
+bool ClassFunctions::compair(Student s1[10], Student s2[10])
+{
+  return (s1[0].name==s2[0].name && 
+  s1[0].family==s2[0].family && 
+  s1[0].city==s2[0].city && 
+  s1[0].phonnumber==s2[0].phonnumber && 
+  s1[0].brithday==s2[0].brithday && 
+  s1[0].gender==s2[0].gender && 
+  s1[0].term.chemistre==s2[0].term.chemistre && 
+  s1[0].term.mathematic==s2[0].term.mathematic && 
+  s1[0].term.physic==s2[0].term.physic);
+}
